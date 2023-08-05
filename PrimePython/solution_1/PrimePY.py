@@ -58,7 +58,7 @@ class prime_sieve(object):
         return this
 
     def countPrimes(self):
-        count = sum(1 for b in self.rawbits if b)
+        count = sum(self.rawbits)
         assert count == self.primeCounts[self.sieveSize]
         return count
 
