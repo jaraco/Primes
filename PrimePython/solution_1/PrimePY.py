@@ -33,10 +33,8 @@ class prime_sieve(object):
         even numbers as false,
         and then only use half as many bits for actual storage
         """
-        if index % 2 == 0:  # even numbers are automaticallty returned as non-prime
-            return False
-        else:
-            return this.rawbits[index // 2]
+        # even numbers are automaticallty returned as non-prime
+        return this.rawbits[index // 2] if index % 2 else False
 
     def runSieve(this):
         factor = 3
