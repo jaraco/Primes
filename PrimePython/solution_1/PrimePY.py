@@ -6,10 +6,10 @@ import math
 
 
 class Sieve:
-    rawbits: list[bool]
+    primes: list[bool]
     """Storage for sieve - since we filter evens, just half as many bits"""
 
-    sieveSize: int
+    limit: int
     """Upper limit, highest prime we'll consider"""
 
     known = {
@@ -28,23 +28,23 @@ class Sieve:
     """
 
     def __init__(self, limit=1000000):
-        self.sieveSize = limit
-        self.rawbits = [True] * (int((self.sieveSize + 1) / 2))
+        self.limit = limit
+        self.primes = [True] * (int((self.limit + 1) / 2))
 
-    def GetBit(self, index):
+    def get(self, index):
         """
         Get a bit from the array of bits, but automatically just filter out
         even numbers as false,
         and then only use half as many bits for actual storage
         """
         # even numbers are automaticallty returned as non-prime
-        return self.rawbits[index // 2] if index % 2 else False
+        return self.primes[index // 2] if index % 2 else False
 
     def factors(self):
         factor = 3
-        q = math.sqrt(self.sieveSize)
+        q = math.sqrt(self.limit)
         while factor < q:
-            factor = next(filter(self.GetBit, range(factor, self.sieveSize)))
+            factor = next(filter(self.get, range(factor, self.limit)))
             yield factor
             factor += 2
 
@@ -58,17 +58,17 @@ class Sieve:
         # Then step by factor * 2 because every second one is going
         # to be even by definition.
         # The for loop to clear the bits is "hidden" in the array slicing.
-        self.rawbits[factor * 3 // 2 :: factor] = [False] * (
-            (self.sieveSize - factor * 3 + factor * 2 - 1) // (factor * 2)
+        self.primes[factor * 3 // 2 :: factor] = [False] * (
+            (self.limit - factor * 3 + factor * 2 - 1) // (factor * 2)
         )
 
-    def countPrimes(self):
-        count = sum(self.rawbits)
-        assert count == self.known[self.sieveSize]
+    def count(self):
+        count = sum(self.primes)
+        assert count == self.known[self.limit]
         return count
 
     def __str__(self):
-        return str(self.countPrimes())
+        return str(self.count())
 
 
 def main():
