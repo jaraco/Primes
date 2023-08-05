@@ -43,10 +43,7 @@ class prime_sieve(object):
         q = math.sqrt(this.sieveSize)
 
         while factor < q:
-            for num in range(factor, this.sieveSize):
-                if this.GetBit(num):
-                    factor = num
-                    break
+            factor = next(filter(this.GetBit, range(factor, this.sieveSize)))
 
             # If marking factor 3, skip marking 6 (it's a mult of 2)
             # so start with the 3rd instance of this factor's multiple.
