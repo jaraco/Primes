@@ -12,9 +12,9 @@ class Sieve:
     sieveSize: int
     """Upper limit, highest prime we'll consider"""
 
-    primeCounts = {
-        10: 4,  # Historical data for validating our results - the number of primes
-        100: 25,  # to be found under some limit, such as 168 primes under 1000
+    known = {
+        10: 4,
+        100: 25,
         1000: 168,
         10000: 1229,
         100000: 9592,
@@ -22,6 +22,10 @@ class Sieve:
         10000000: 664579,
         100000000: 5761455,
     }
+    """
+    Historical data for validating results - the number of primes
+    to be found under some limit, such as 168 primes under 1000.
+    """
 
     def __init__(self, limit=1000000):
         self.sieveSize = limit
@@ -60,7 +64,7 @@ class Sieve:
 
     def countPrimes(self):
         count = sum(self.rawbits)
-        assert count == self.primeCounts[self.sieveSize]
+        assert count == self.known[self.sieveSize]
         return count
 
     def __str__(self):
