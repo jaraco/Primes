@@ -36,7 +36,7 @@ class prime_sieve(object):
         if index % 2 == 0:  # even numbers are automaticallty returned as non-prime
             return False
         else:
-            return this.rawbits[int(index / 2)]
+            return this.rawbits[index // 2]
 
     def runSieve(this):
         factor = 3
