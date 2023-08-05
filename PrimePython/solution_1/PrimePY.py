@@ -29,8 +29,9 @@ class prime_sieve(object):
 
     def GetBit(this, index):
         """
-        Gets a bit from the array of bits, but automatically just filters out even numbers as false,
-        and then only uses half as many bits for actual storage
+        Get a bit from the array of bits, but automatically just filter out
+        even numbers as false,
+        and then only use half as many bits for actual storage
         """
         if index % 2 == 0:  # even numbers are automaticallty returned as non-prime
             return False
@@ -47,9 +48,11 @@ class prime_sieve(object):
                     factor = num
                     break
 
-            # If marking factor 3, you wouldn't mark 6 (it's a mult of 2) so start with the 3rd instance of this factor's multiple.
-            # We can then step by factor * 2 because every second one is going to be even by definition
-            # the for loop to clear the bits is "hidden" in the array slicing
+            # If marking factor 3, skip marking 6 (it's a mult of 2)
+            # so start with the 3rd instance of this factor's multiple.
+            # Then step by factor * 2 because every second one is going
+            # to be even by definition.
+            # The for loop to clear the bits is "hidden" in the array slicing.
             this.rawbits[factor * 3 // 2 :: factor] = [0] * (
                 (this.sieveSize - factor * 3 + factor * 2 - 1) // (factor * 2)
             )
