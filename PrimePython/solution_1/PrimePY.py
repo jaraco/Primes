@@ -53,7 +53,7 @@ class prime_sieve(object):
             # Then step by factor * 2 because every second one is going
             # to be even by definition.
             # The for loop to clear the bits is "hidden" in the array slicing.
-            this.rawbits[factor * 3 // 2 :: factor] = [0] * (
+            this.rawbits[factor * 3 // 2 :: factor] = [False] * (
                 (this.sieveSize - factor * 3 + factor * 2 - 1) // (factor * 2)
             )
 
