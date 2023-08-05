@@ -5,7 +5,7 @@ Python Prime Sieve
 import math
 
 
-class prime_sieve(object):
+class Sieve:
     rawbits: list[bool]
     """Storage for sieve - since we filter evens, just half as many bits"""
 
@@ -44,18 +44,19 @@ class prime_sieve(object):
             yield factor
             factor += 2
 
-    def runSieve(this):
+    def clear_all(this):
         for factor in this.factors():
-            # If marking factor 3, skip marking 6 (it's a mult of 2)
-            # so start with the 3rd instance of this factor's multiple.
-            # Then step by factor * 2 because every second one is going
-            # to be even by definition.
-            # The for loop to clear the bits is "hidden" in the array slicing.
-            this.rawbits[factor * 3 // 2 :: factor] = [False] * (
-                (this.sieveSize - factor * 3 + factor * 2 - 1) // (factor * 2)
-            )
+            this.clear(factor)
 
-        return this
+    def clear(this, factor):
+        # If marking factor 3, skip marking 6 (it's a mult of 2)
+        # so start with the 3rd instance of this factor's multiple.
+        # Then step by factor * 2 because every second one is going
+        # to be even by definition.
+        # The for loop to clear the bits is "hidden" in the array slicing.
+        this.rawbits[factor * 3 // 2 :: factor] = [False] * (
+            (this.sieveSize - factor * 3 + factor * 2 - 1) // (factor * 2)
+        )
 
     def countPrimes(self):
         count = sum(self.rawbits)
@@ -66,4 +67,10 @@ class prime_sieve(object):
         return str(self.countPrimes())
 
 
-__name__ == '__main__' and print(prime_sieve().runSieve())
+def main():
+    sieve = Sieve()
+    sieve.clear_all()
+    print(sieve)
+
+
+__name__ == '__main__' and main()
