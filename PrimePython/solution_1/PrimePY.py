@@ -36,13 +36,16 @@ class prime_sieve(object):
         # even numbers are automaticallty returned as non-prime
         return this.rawbits[index // 2] if index % 2 else False
 
-    def runSieve(this):
+    def factors(this):
         factor = 3
         q = math.sqrt(this.sieveSize)
-
         while factor < q:
             factor = next(filter(this.GetBit, range(factor, this.sieveSize)))
+            yield factor
+            factor += 2
 
+    def runSieve(this):
+        for factor in this.factors():
             # If marking factor 3, skip marking 6 (it's a mult of 2)
             # so start with the 3rd instance of this factor's multiple.
             # Then step by factor * 2 because every second one is going
@@ -52,7 +55,6 @@ class prime_sieve(object):
                 (this.sieveSize - factor * 3 + factor * 2 - 1) // (factor * 2)
             )
 
-            factor += 2  # No need to check evens, so skip to next odd (factor = 3, 5, 7, 9...)
         return this
 
     def countPrimes(self):
