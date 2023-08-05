@@ -23,39 +23,39 @@ class Sieve:
         100000000: 5761455,
     }
 
-    def __init__(this, limit=1000000):
-        this.sieveSize = limit
-        this.rawbits = [True] * (int((this.sieveSize + 1) / 2))
+    def __init__(self, limit=1000000):
+        self.sieveSize = limit
+        self.rawbits = [True] * (int((self.sieveSize + 1) / 2))
 
-    def GetBit(this, index):
+    def GetBit(self, index):
         """
         Get a bit from the array of bits, but automatically just filter out
         even numbers as false,
         and then only use half as many bits for actual storage
         """
         # even numbers are automaticallty returned as non-prime
-        return this.rawbits[index // 2] if index % 2 else False
+        return self.rawbits[index // 2] if index % 2 else False
 
-    def factors(this):
+    def factors(self):
         factor = 3
-        q = math.sqrt(this.sieveSize)
+        q = math.sqrt(self.sieveSize)
         while factor < q:
-            factor = next(filter(this.GetBit, range(factor, this.sieveSize)))
+            factor = next(filter(self.GetBit, range(factor, self.sieveSize)))
             yield factor
             factor += 2
 
-    def clear_all(this):
-        for factor in this.factors():
-            this.clear(factor)
+    def clear_all(self):
+        for factor in self.factors():
+            self.clear(factor)
 
-    def clear(this, factor):
+    def clear(self, factor):
         # If marking factor 3, skip marking 6 (it's a mult of 2)
         # so start with the 3rd instance of this factor's multiple.
         # Then step by factor * 2 because every second one is going
         # to be even by definition.
         # The for loop to clear the bits is "hidden" in the array slicing.
-        this.rawbits[factor * 3 // 2 :: factor] = [False] * (
-            (this.sieveSize - factor * 3 + factor * 2 - 1) // (factor * 2)
+        self.rawbits[factor * 3 // 2 :: factor] = [False] * (
+            (self.sieveSize - factor * 3 + factor * 2 - 1) // (factor * 2)
         )
 
     def countPrimes(self):
