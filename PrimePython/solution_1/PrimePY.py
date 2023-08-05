@@ -53,11 +53,10 @@ class Sieve:
             self.clear(factor)
 
     def clear(self, factor):
-        # If marking factor 3, skip marking 6 (it's a mult of 2)
-        # so start with the 3rd instance of this factor's multiple.
-        # Then step by factor * 2 because every second one is going
-        # to be even by definition.
-        # The for loop to clear the bits is "hidden" in the array slicing.
+        """
+        Mark all multiples of factor as not prime.
+        """
+        # Start with the 3rd factor (2nd factor is a multiple of 2).
         self.primes[factor * 3 // 2 :: factor] = [False] * (
             (self.limit - factor * 3 + factor * 2 - 1) // (factor * 2)
         )
